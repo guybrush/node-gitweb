@@ -3685,7 +3685,10 @@ sub blob_contenttype {
 	my ($fd, $file_name, $type) = @_;
 
 	$type ||= blob_mimetype($fd, $file_name);
-	if ($type eq 'text/plain' && defined $default_text_plain_charset) {
+	# the following line has been changed to also support other text-mimes
+	# e.g: 'text/html'
+	# if ($type eq 'text/plain' && defined $default_text_plain_charset) {
+	if ($type =~ m/^text/ && defined $default_text_plain_charset) {
 		$type .= "; charset=$default_text_plain_charset";
 	}
 
